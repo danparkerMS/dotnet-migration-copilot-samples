@@ -1,0 +1,58 @@
+{
+    "version": "2.0.0",
+    "tasks": [
+        {
+            "label": "restore",
+            "command": "nuget",
+            "type": "shell",
+            "args": ["restore", "ContosoUniversity/ContosoUniversity.sln"],
+            "group": "build",
+            "presentation": {
+                "echo": true,
+                "reveal": "always",
+                "focus": false,
+                "panel": "shared"
+            },
+            "problemMatcher": []
+        },
+        {
+            "label": "build",
+            "command": "msbuild",
+            "type": "shell",
+            "args": [
+                "ContosoUniversity/ContosoUniversity.sln",
+                "/p:Configuration=Debug"
+            ],
+            "group": {
+                "kind": "build",
+                "isDefault": true
+            },
+            "presentation": {
+                "echo": true,
+                "reveal": "always",
+                "focus": false,
+                "panel": "shared"
+            },
+            "problemMatcher": "$msCompile",
+            "dependsOn": "restore"
+        },
+        {
+            "label": "clean",
+            "command": "msbuild",
+            "type": "shell",
+            "args": [
+                "ContosoUniversity/ContosoUniversity.sln",
+                "/t:Clean",
+                "/p:Configuration=Debug"
+            ],
+            "group": "build",
+            "presentation": {
+                "echo": true,
+                "reveal": "always",
+                "focus": false,
+                "panel": "shared"
+            },
+            "problemMatcher": "$msCompile"
+        }
+    ]
+}

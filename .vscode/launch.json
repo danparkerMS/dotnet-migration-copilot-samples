@@ -1,0 +1,18 @@
+{
+    "version": "0.2.0",
+    "configurations": [
+        {
+            "name": "Launch IIS Express",
+            "type": "coreclr",
+            "request": "launch",
+            "program": "C:\\Program Files\\IIS Express\\iisexpress.exe",
+            "args": [
+                "/path:${workspaceFolder}\\ContosoUniversity",
+                "/port:44300"
+            ],
+            "cwd": "${workspaceFolder}\\ContosoUniversity",
+            "stopAtEntry": false,
+            "console": "integratedTerminal"
+        }
+    ]
+}
