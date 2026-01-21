@@ -3,11 +3,11 @@ using Microsoft.EntityFrameworkCore;
 using System.Linq;
 using System.Net;
 using System.IO;
-using System.Web;
 using ContosoUniversity.Data;
 using ContosoUniversity.Models;
 using Microsoft.AspNetCore.Mvc;
 using Microsoft.AspNetCore.Mvc.Rendering;
+using Microsoft.AspNetCore.Http;
 using Microsoft.AspNetCore.Mvc.ModelBinding;
 
 namespace ContosoUniversity.Controllers
@@ -46,12 +46,12 @@ namespace ContosoUniversity.Controllers
         // POST: Courses/Create
         [HttpPost]
         [ValidateAntiForgeryToken]
-        public ActionResult Create([Bind("CourseID", "Title", "Credits", "DepartmentID", "TeachingMaterialImagePath")] Course course, HttpPostedFileBase teachingMaterialImage)
+        public ActionResult Create([Bind("CourseID", "Title", "Credits", "DepartmentID", "TeachingMaterialImagePath")] Course course, IFormFile teachingMaterialImage)
         {
             if (ModelState.IsValid)
             {
                 // Handle file upload if an image is provided
-                if (teachingMaterialImage != null && teachingMaterialImage.ContentLength > 0)
+                if (teachingMaterialImage != null && teachingMaterialImage.Length > 0)
                 {
                     // Validate file type
                     var allowedExtensions = new[] { ".jpg", ".jpeg", ".png", ".gif", ".bmp" };
@@ -129,12 +129,12 @@ namespace ContosoUniversity.Controllers
         // POST: Courses/Edit/5
         [HttpPost]
         [ValidateAntiForgeryToken]
-        public ActionResult Edit([Bind("CourseID", "Title", "Credits", "DepartmentID", "TeachingMaterialImagePath")] Course course, HttpPostedFileBase teachingMaterialImage)
+        public ActionResult Edit([Bind("CourseID", "Title", "Credits", "DepartmentID", "TeachingMaterialImagePath")] Course course, IFormFile teachingMaterialImage)
         {
             if (ModelState.IsValid)
             {
                 // Handle file upload if a new image is provided
-                if (teachingMaterialImage != null && teachingMaterialImage.ContentLength > 0)
+                if (teachingMaterialImage != null && teachingMaterialImage.Length > 0)
                 {
                     // Validate file type
                     var allowedExtensions = new[] { ".jpg", ".jpeg", ".png", ".gif", ".bmp" };

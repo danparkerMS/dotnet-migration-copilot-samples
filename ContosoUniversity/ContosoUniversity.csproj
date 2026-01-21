@@ -9,16 +9,12 @@
     <FileVersion>1.0.0.0</FileVersion>
   </PropertyGroup>
   <ItemGroup>
-    <Reference Include="netstandard, Version=2.0.0.0, Culture=neutral, PublicKeyToken=cc7b13ffcd2ddd51">
-      <Private>True</Private>
-    </Reference>
     <PackageReference Include="bootstrap" Version="5.3.3" />
     <PackageReference Include="jQuery" Version="3.7.1" />
     <PackageReference Include="jQuery.Validation" Version="1.21.0" />
     <PackageReference Include="Microsoft.Bcl.AsyncInterfaces" Version="9.0.12" />
     <PackageReference Include="Microsoft.Bcl.HashCode" Version="6.0.0" />
-    <PackageReference Include="Microsoft.Data.SqlClient" Version="5.1.6" />
-    <PackageReference Include="Microsoft.Data.SqlClient.SNI.runtime" Version="5.1.1" />
+    <PackageReference Include="Microsoft.Data.SqlClient" Version="6.1.4" />
     <PackageReference Include="Microsoft.EntityFrameworkCore" Version="9.0.12" />
     <PackageReference Include="Microsoft.EntityFrameworkCore.Abstractions" Version="9.0.12" />
     <PackageReference Include="Microsoft.EntityFrameworkCore.Analyzers" Version="9.0.12" />
@@ -36,17 +32,15 @@
     <PackageReference Include="Microsoft.Extensions.Logging.Abstractions" Version="9.0.12" />
     <PackageReference Include="Microsoft.Extensions.Options" Version="9.0.12" />
     <PackageReference Include="Microsoft.Extensions.Primitives" Version="9.0.12" />
-    <PackageReference Include="Microsoft.Identity.Client" Version="4.61.3" />
     <PackageReference Include="Microsoft.jQuery.Unobtrusive.Validation" Version="4.0.0" />
     <PackageReference Include="Modernizr" Version="2.6.2" />
     <PackageReference Include="Newtonsoft.Json" Version="13.0.4" />
     <PackageReference Include="System.Collections.Immutable" Version="9.0.12" />
     <PackageReference Include="System.Diagnostics.DiagnosticSource" Version="9.0.12" />
     <PackageReference Include="System.Runtime.CompilerServices.Unsafe" Version="6.1.2" />
-    <PackageReference Include="WebGrease" Version="1.5.2" />
-    <PackageReference Include="Microsoft.AspNetCore.SystemWebAdapters" Version="2.2.1" />
     <PackageReference Include="Antlr4" Version="4.6.6" />
-    <PackageReference Include="System.Configuration.ConfigurationManager" Version="10.0.2" />
+    <PackageReference Include="System.Configuration.ConfigurationManager" Version="9.0.12" />
+    <PackageReference Include="Microsoft.AspNetCore.Mvc.Razor.RuntimeCompilation" Version="9.0.12" />
   </ItemGroup>
   <ItemGroup>
     <Compile Update="Global.asax.cs">
