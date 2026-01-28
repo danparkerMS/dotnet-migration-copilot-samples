@@ -1,4 +1,5 @@
 using System;
+using System.Threading.Tasks;
 using Microsoft.EntityFrameworkCore;
 using System.Linq;
 using System.Net;
@@ -46,7 +47,7 @@ namespace ContosoUniversity.Controllers
         // POST: Courses/Create
         [HttpPost]
         [ValidateAntiForgeryToken]
-        public ActionResult Create([Bind("CourseID", "Title", "Credits", "DepartmentID", "TeachingMaterialImagePath")] Course course, IFormFile teachingMaterialImage)
+        public async Task<ActionResult> Create([Bind("CourseID", "Title", "Credits", "DepartmentID", "TeachingMaterialImagePath")] Course course, IFormFile teachingMaterialImage)
         {
             if (ModelState.IsValid)
             {
@@ -65,7 +66,7 @@ namespace ContosoUniversity.Controllers
                     }
 
                     // Validate file size (max 5MB)
-                    if (teachingMaterialImage.ContentLength > 5 * 1024 * 1024)
+                    if (teachingMaterialImage.Length > 5 * 1024 * 1024)
                     {
                         ModelState.AddModelError("teachingMaterialImage", "File size must be less than 5MB.");
                         ViewBag.DepartmentID = new SelectList(db.Departments, "DepartmentID", "Name", course.DepartmentID);
@@ -75,7 +76,7 @@ namespace ContosoUniversity.Controllers
                     try
                     {
                         // Create uploads directory if it doesn't exist
-                        var uploadsPath = Server.MapPath("~/Uploads/TeachingMaterials/");
+                        var uploadsPath = Path.Combine(Directory.GetCurrentDirectory(), "wwwroot", "uploads", "TeachingMaterials");
                         if (!Directory.Exists(uploadsPath))
                         {
                             Directory.CreateDirectory(uploadsPath);
@@ -86,8 +87,11 @@ namespace ContosoUniversity.Controllers
                         var filePath = Path.Combine(uploadsPath, fileName);
 
                         // Save file
-                        teachingMaterialImage.SaveAs(filePath);
-                        course.TeachingMaterialImagePath = $"~/Uploads/TeachingMaterials/{fileName}";
+                        using (var stream = new FileStream(filePath, FileMode.Create))
+                        {
+                            await teachingMaterialImage.CopyToAsync(stream);
+                        }
+                        course.TeachingMaterialImagePath = $"/uploads/TeachingMaterials/{fileName}";
                     }
                     catch (Exception ex)
                     {
@@ -129,7 +133,7 @@ namespace ContosoUniversity.Controllers
         // POST: Courses/Edit/5
         [HttpPost]
         [ValidateAntiForgeryToken]
-        public ActionResult Edit([Bind("CourseID", "Title", "Credits", "DepartmentID", "TeachingMaterialImagePath")] Course course, IFormFile teachingMaterialImage)
+        public async Task<ActionResult> Edit([Bind("CourseID", "Title", "Credits", "DepartmentID", "TeachingMaterialImagePath")] Course course, IFormFile teachingMaterialImage)
         {
             if (ModelState.IsValid)
             {
@@ -148,7 +152,7 @@ namespace ContosoUniversity.Controllers
                     }
 
                     // Validate file size (max 5MB)
-                    if (teachingMaterialImage.ContentLength > 5 * 1024 * 1024)
+                    if (teachingMaterialImage.Length > 5 * 1024 * 1024)
                     {
                         ModelState.AddModelError("teachingMaterialImage", "File size must be less than 5MB.");
                         ViewBag.DepartmentID = new SelectList(db.Departments, "DepartmentID", "Name", course.DepartmentID);
@@ -158,7 +162,7 @@ namespace ContosoUniversity.Controllers
                     try
                     {
                         // Create uploads directory if it doesn't exist
-                        var uploadsPath = Server.MapPath("~/Uploads/TeachingMaterials/");
+                        var uploadsPath = Path.Combine(Directory.GetCurrentDirectory(), "wwwroot", "uploads", "TeachingMaterials");
                         if (!Directory.Exists(uploadsPath))
                         {
                             Directory.CreateDirectory(uploadsPath);
@@ -171,7 +175,8 @@ namespace ContosoUniversity.Controllers
                         // Delete old file if exists
                         if (!string.IsNullOrEmpty(course.TeachingMaterialImagePath))
                         {
-                            var oldFilePath = Server.MapPath(course.TeachingMaterialImagePath);
+                            var oldFileName = Path.GetFileName(course.TeachingMaterialImagePath);
+                            var oldFilePath = Path.Combine(Directory.GetCurrentDirectory(), "wwwroot", "uploads", "TeachingMaterials", oldFileName);
                             if (System.IO.File.Exists(oldFilePath))
                             {
                                 System.IO.File.Delete(oldFilePath);
@@ -179,8 +184,11 @@ namespace ContosoUniversity.Controllers
                         }
 
                         // Save new file
-                        teachingMaterialImage.SaveAs(filePath);
-                        course.TeachingMaterialImagePath = $"~/Uploads/TeachingMaterials/{fileName}";
+                        using (var stream = new FileStream(filePath, FileMode.Create))
+                        {
+                            await teachingMaterialImage.CopyToAsync(stream);
+                        }
+                        course.TeachingMaterialImagePath = $"/uploads/TeachingMaterials/{fileName}";
                     }
                     catch (Exception ex)
                     {
@@ -228,7 +236,8 @@ namespace ContosoUniversity.Controllers
             // Delete associated image file if it exists
             if (!string.IsNullOrEmpty(course.TeachingMaterialImagePath))
             {
-                var filePath = Server.MapPath(course.TeachingMaterialImagePath);
+                var fileName = Path.GetFileName(course.TeachingMaterialImagePath);
+                var filePath = Path.Combine(Directory.GetCurrentDirectory(), "wwwroot", "uploads", "TeachingMaterials", fileName);
                 if (System.IO.File.Exists(filePath))
                 {
                     try

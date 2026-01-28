@@ -134,7 +134,7 @@ namespace ContosoUniversity.Controllers
         // POST: Instructors/Edit/5
         [HttpPost]
         [ValidateAntiForgeryToken]
-        public ActionResult Edit(int? id, string[] selectedCourses)
+        public ActionResult Edit(int? id, string[] selectedCourses, [Bind("LastName,FirstMidName,HireDate,OfficeAssignment")] Instructor instructor)
         {
             if (id == null)
             {
@@ -147,12 +147,17 @@ namespace ContosoUniversity.Controllers
                .Where(i => i.ID == id)
                .Single();
 
-            if (TryUpdateModel(instructorToUpdate, "",
-               new string[] { "LastName", "FirstMidName", "HireDate", "OfficeAssignment" }))
+            // Update the instructor properties from the bound model
+            if (ModelState.IsValid)
             {
+                instructorToUpdate.LastName = instructor.LastName;
+                instructorToUpdate.FirstMidName = instructor.FirstMidName;
+                instructorToUpdate.HireDate = instructor.HireDate;
+                instructorToUpdate.OfficeAssignment = instructor.OfficeAssignment;
+
                 try
                 {
-                    if (String.IsNullOrWhiteSpace(instructorToUpdate.OfficeAssignment.Location))
+                    if (instructorToUpdate.OfficeAssignment != null && String.IsNullOrWhiteSpace(instructorToUpdate.OfficeAssignment.Location))
                     {
                         instructorToUpdate.OfficeAssignment = null;
                     }
