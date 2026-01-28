@@ -49,6 +49,12 @@ ContosoUniversity.Tests/
 │   └── PaginatedListTests.cs (5 tests)
 ├── Services/
 │   └── NotificationServiceTests.cs (13 tests)
+├── Models/
+│   ├── StudentValidationTests.cs (38 tests)
+│   ├── CourseValidationTests.cs (26 tests)
+│   ├── DepartmentValidationTests.cs (20 tests)
+│   ├── InstructorValidationTests.cs (38 tests)
+│   └── OfficeAssignmentValidationTests.cs (18 tests)
 ├── Controllers/
 │   ├── StudentsControllerTests.cs (17 tests)
 │   ├── CoursesControllerTests.cs (14 tests)
@@ -217,6 +223,31 @@ Configures the application for integration testing with an in-memory database.
   - Page boundaries
   - Empty results
 
+### Models (Validation)
+- ✅ **StudentValidationTests** - 38 tests
+  - Required field validation (LastName, FirstMidName)
+  - StringLength constraints (max 50 characters)
+  - EnrollmentDate range validation (1753-9999)
+  - FullName computed property
+- ✅ **CourseValidationTests** - 26 tests
+  - Title StringLength (3-50 characters)
+  - Credits range validation (0-5)
+  - TeachingMaterialImagePath max length
+- ✅ **DepartmentValidationTests** - 20 tests
+  - Name StringLength (3-50 characters)
+  - Budget validation
+  - StartDate validation
+- ✅ **InstructorValidationTests** - 38 tests
+  - Required field validation (LastName, FirstMidName)
+  - StringLength constraints (max 50 characters)
+  - HireDate range validation (1753-9999)
+  - FullName computed property
+- ✅ **OfficeAssignmentValidationTests** - 18 tests
+  - Location StringLength (max 50 characters)
+  - Null location handling
+
+**Total Model Validation Tests: 140**
+
 ### Controllers
 - ✅ **StudentsController** - 17 tests
   - Index with search, sorting, pagination
@@ -256,7 +287,7 @@ Configures the application for integration testing with an in-memory database.
   - Index, Details, Create endpoints
   - Search functionality
 
-**TOTAL: 95 TESTS** (91 unit + 4 integration)
+**TOTAL: 199 TESTS** (195 unit + 4 integration)
 
 ## Known Issues
 
