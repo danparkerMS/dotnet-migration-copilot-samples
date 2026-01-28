@@ -1,5 +1,6 @@
 using System;
 using System.Collections.Generic;
+using ContosoUniversity.Data;
 using ContosoUniversity.Services;
 using ContosoUniversity.Models;
 using Microsoft.AspNetCore.Mvc;
@@ -8,6 +9,11 @@ namespace ContosoUniversity.Controllers
 {
     public class NotificationsController : BaseController
     {
+        public NotificationsController(SchoolContext context, NotificationService notificationService)
+            : base(context, notificationService)
+        {
+        }
+
         // GET: api/notifications - Get pending notifications for admin
         [HttpGet]
         public JsonResult GetNotifications()

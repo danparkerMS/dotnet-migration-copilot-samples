@@ -10,8 +10,13 @@ using Microsoft.Extensions.Configuration;
 var builder = WebApplication.CreateBuilder(args);
 
 // Add services to the container
-builder.Services.AddDbContext<SchoolContext>(options =>
-    options.UseSqlServer(builder.Configuration.GetConnectionString("DefaultConnection")));
+// Only register SQL Server DbContext if not in Testing environment
+// Testing environment will provide its own InMemory database
+if (builder.Environment.EnvironmentName != "Testing")
+{
+    builder.Services.AddDbContext<SchoolContext>(options =>
+        options.UseSqlServer(builder.Configuration.GetConnectionString("DefaultConnection")));
+}
 
 // Register notification service
 builder.Services.AddScoped<NotificationService>();
@@ -45,11 +50,14 @@ app.MapControllerRoute(
     name: "default",
     pattern: "{controller=Home}/{action=Index}/{id?}");
 
-// Initialize the database
-using (var scope = app.Services.CreateScope())
+// Initialize the database (skip in Testing environment)
+if (!app.Environment.IsEnvironment("Testing"))
 {
-    var context = scope.ServiceProvider.GetRequiredService<SchoolContext>();
-    DbInitializer.Initialize(context);
+    using (var scope = app.Services.CreateScope())
+    {
+        var context = scope.ServiceProvider.GetRequiredService<SchoolContext>();
+        DbInitializer.Initialize(context);
+    }
 }
 
 app.Run();

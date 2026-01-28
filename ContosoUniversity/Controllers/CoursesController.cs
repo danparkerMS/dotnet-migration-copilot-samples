@@ -6,6 +6,7 @@ using System.Net;
 using System.IO;
 using ContosoUniversity.Data;
 using ContosoUniversity.Models;
+using ContosoUniversity.Services;
 using Microsoft.AspNetCore.Mvc;
 using Microsoft.AspNetCore.Mvc.Rendering;
 using Microsoft.AspNetCore.Http;
@@ -15,6 +16,11 @@ namespace ContosoUniversity.Controllers
 {
     public class CoursesController : BaseController
     {
+        public CoursesController(SchoolContext context, NotificationService notificationService)
+            : base(context, notificationService)
+        {
+        }
+
         // GET: Courses
         public ActionResult Index()
         {

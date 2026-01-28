@@ -11,11 +11,10 @@ namespace ContosoUniversity.Controllers
         protected SchoolContext db;
         protected NotificationService notificationService;
 
-        public BaseController()
+        public BaseController(SchoolContext context, NotificationService notificationService)
         {
-            // Temporarily disable NotificationService for migration
-            // notificationService = new NotificationService();
-            db = SchoolContextFactory.Create();
+            db = context;
+            this.notificationService = notificationService;
         }
 
         protected void SendEntityNotification(string entityType, string entityId, EntityOperation operation)

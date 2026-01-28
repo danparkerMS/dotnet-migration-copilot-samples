@@ -8,11 +8,9 @@ namespace ContosoUniversity.IntegrationTests.ApiTests
     public class StudentsIntegrationTests : IClassFixture<ContosoWebApplicationFactory<Program>>
     {
         private readonly HttpClient _client;
-        private readonly ContosoWebApplicationFactory<Program> _factory;
 
         public StudentsIntegrationTests(ContosoWebApplicationFactory<Program> factory)
         {
-            _factory = factory;
             _client = factory.CreateClient();
         }
 
