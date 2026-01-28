@@ -46,18 +46,23 @@ dotnet test --filter "FullyQualifiedName~NotificationServiceTests"
 ```
 ContosoUniversity.Tests/
 ├── Data/
-│   └── PaginatedListTests.cs
+│   └── PaginatedListTests.cs (5 tests)
 ├── Services/
-│   └── NotificationServiceTests.cs
+│   └── NotificationServiceTests.cs (13 tests)
 ├── Controllers/
-│   └── (Future controller tests)
+│   ├── StudentsControllerTests.cs (17 tests)
+│   ├── CoursesControllerTests.cs (14 tests)
+│   ├── DepartmentsControllerTests.cs (15 tests)
+│   ├── InstructorsControllerTests.cs (19 tests)
+│   ├── HomeControllerTests.cs (5 tests)
+│   └── NotificationsControllerTests.cs (3 tests)
 └── TestHelpers/
     ├── InMemoryDbContextFactory.cs
     └── TestDataBuilder.cs
 
 ContosoUniversity.IntegrationTests/
 ├── ApiTests/
-│   └── StudentsIntegrationTests.cs
+│   └── StudentsIntegrationTests.cs (4 tests)
 └── TestHelpers/
     ├── ContosoWebApplicationFactory.cs
     └── TestDataBuilder.cs
@@ -212,15 +217,50 @@ Configures the application for integration testing with an in-memory database.
   - Page boundaries
   - Empty results
 
+### Controllers
+- ✅ **StudentsController** - 17 tests
+  - Index with search, sorting, pagination
+  - Details (valid/invalid/null IDs)
+  - Create GET/POST
+  - Edit GET
+  - Delete GET/POST
+- ✅ **CoursesController** - 14 tests
+  - Index with courses and departments
+  - Details (valid/invalid/null IDs)
+  - Create GET/POST
+  - Edit GET
+  - Delete GET/POST
+- ✅ **DepartmentsController** - 15 tests
+  - Index with administrator information
+  - Details (valid/invalid/null IDs)
+  - Create GET/POST with instructor selection
+  - Edit GET
+  - Delete GET/POST
+- ✅ **InstructorsController** - 19 tests
+  - Index with filtering and course assignments
+  - Details (valid/invalid/null IDs)
+  - Create GET/POST with course assignments
+  - Edit GET
+  - Delete GET/POST with department handling
+- ✅ **HomeController** - 5 tests
+  - Index, About, Contact, Error, Unauthorized pages
+- ✅ **NotificationsController** - 3 tests
+  - Index dashboard
+  - GetNotifications API
+  - MarkAsRead API
+
+**Total Controller Tests: 73**
+
 ### Integration Tests
-- 🔨 **Students API** - 4 tests (infrastructure in progress)
+- ✅ **Students API** - 4 tests
   - Index, Details, Create endpoints
   - Search functionality
 
+**TOTAL: 95 TESTS** (91 unit + 4 integration)
+
 ## Known Issues
 
-### Integration Tests
-The WebApplicationFactory currently has a conflict between SQL Server and In-Memory database providers. This is being resolved. Unit tests are fully functional.
+None! All 95 tests are passing.
 
 ## Adding New Tests
 
