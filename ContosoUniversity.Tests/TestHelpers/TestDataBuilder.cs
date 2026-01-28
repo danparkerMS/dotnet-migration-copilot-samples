@@ -1,0 +1,154 @@
+using ContosoUniversity.Models;
+
+namespace ContosoUniversity.Tests.TestHelpers
+{
+    public static class TestDataBuilder
+    {
+        public static List<Student> GetTestStudents()
+        {
+            return new List<Student>
+            {
+                new Student
+                {
+                    ID = 1,
+                    FirstMidName = "Carson",
+                    LastName = "Alexander",
+                    EnrollmentDate = DateTime.Parse("2019-09-01")
+                },
+                new Student
+                {
+                    ID = 2,
+                    FirstMidName = "Meredith",
+                    LastName = "Alonso",
+                    EnrollmentDate = DateTime.Parse("2017-09-01")
+                },
+                new Student
+                {
+                    ID = 3,
+                    FirstMidName = "Arturo",
+                    LastName = "Anand",
+                    EnrollmentDate = DateTime.Parse("2018-09-01")
+                }
+            };
+        }
+
+        public static List<Instructor> GetTestInstructors()
+        {
+            return new List<Instructor>
+            {
+                new Instructor
+                {
+                    ID = 1,
+                    FirstMidName = "Kim",
+                    LastName = "Abercrombie",
+                    HireDate = DateTime.Parse("1995-03-11")
+                },
+                new Instructor
+                {
+                    ID = 2,
+                    FirstMidName = "Fadi",
+                    LastName = "Fakhouri",
+                    HireDate = DateTime.Parse("2002-07-06")
+                }
+            };
+        }
+
+        public static List<Department> GetTestDepartments()
+        {
+            return new List<Department>
+            {
+                new Department
+                {
+                    DepartmentID = 1,
+                    Name = "English",
+                    Budget = 350000,
+                    StartDate = DateTime.Parse("2007-09-01"),
+                    InstructorID = 1
+                },
+                new Department
+                {
+                    DepartmentID = 2,
+                    Name = "Mathematics",
+                    Budget = 100000,
+                    StartDate = DateTime.Parse("2007-09-01"),
+                    InstructorID = 2
+                }
+            };
+        }
+
+        public static List<Course> GetTestCourses()
+        {
+            return new List<Course>
+            {
+                new Course
+                {
+                    CourseID = 1050,
+                    Title = "Chemistry",
+                    Credits = 3,
+                    DepartmentID = 2
+                },
+                new Course
+                {
+                    CourseID = 4022,
+                    Title = "Microeconomics",
+                    Credits = 3,
+                    DepartmentID = 1
+                }
+            };
+        }
+
+        public static Student CreateStudent(string firstName = "Test", string lastName = "Student")
+        {
+            return new Student
+            {
+                FirstMidName = firstName,
+                LastName = lastName,
+                EnrollmentDate = DateTime.Now
+            };
+        }
+
+        public static Instructor CreateInstructor(string firstName = "Test", string lastName = "Instructor")
+        {
+            return new Instructor
+            {
+                FirstMidName = firstName,
+                LastName = lastName,
+                HireDate = DateTime.Now
+            };
+        }
+
+        public static Department CreateDepartment(string name = "Test Department", decimal budget = 100000)
+        {
+            return new Department
+            {
+                Name = name,
+                Budget = budget,
+                StartDate = DateTime.Now
+            };
+        }
+
+        public static Course CreateCourse(int courseId = 1000, string title = "Test Course", int credits = 3)
+        {
+            return new Course
+            {
+                CourseID = courseId,
+                Title = title,
+                Credits = credits
+            };
+        }
+
+        public static Notification CreateNotification(string entityType = "Student", EntityOperation operation = EntityOperation.CREATE)
+        {
+            return new Notification
+            {
+                EntityType = entityType,
+                EntityId = "1",
+                Operation = operation.ToString(),
+                Message = $"{entityType} was {operation}",
+                CreatedAt = DateTime.Now,
+                CreatedBy = "TestUser",
+                IsRead = false
+            };
+        }
+    }
+}
